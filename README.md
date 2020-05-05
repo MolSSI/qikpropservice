@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/MolSSI/covid_apis.svg?branch=master)](https://travis-ci.com/MolSSI/covid_apis)
+[![codecov](https://codecov.io/gh/MolSSI/covid_apis/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/covid_apis)
 
 MolSSI COVID APIs
 ========================
@@ -68,8 +69,8 @@ a `.env` file which will be read automatically by docker-compose.
 
 ```bash
 # create the host volume folder with non-root access
-mkdir data
-chown -R myUser:myUse data
+mkdir docker_data
+chown -R myUser:myUse docker_data
 # clean unused docker images and containers
 ./dockerclean.sh
 # build and run containers
