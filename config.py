@@ -31,6 +31,8 @@ class Config:
     # log page access to db or not
     DB_LOGGING = True
 
+    UPLOAD_FOLDER = 'uploads/'
+
     MONGODB_SETTINGS = {
         'host': os.environ.get('MONGO_URI',
                                "mongodb://<dbuser>:<dbpassword>localhost::27017/covid_apis_db"),

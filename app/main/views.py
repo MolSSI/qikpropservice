@@ -1,11 +1,14 @@
 from flask import render_template, redirect, url_for, abort, flash, request,\
     current_app, make_response, send_from_directory
+from werkzeug.utils import secure_filename
 
 from . import main
 from .. import cache
 import qcportal as plt
 from ..models import save_access
 import logging
+from .forms import UploadForm
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -36,9 +39,22 @@ def index():
     ]
     return render_template('index.html', apps=apps)
 
-@main.route('/covid_form/')
+
+@main.route('/covid_form/', methods=['GET', 'POST'])
 def app_in_iframe():
-    return render_template('covid/upload_data_form.html')
+    form = UploadForm()
+
+    # if form data is valid, go to success
+    if form.validate_on_submit():
+        file = form.data_file.data
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        flash(f'Thank you {form.name.data}, Data was uploaded successfully')
+
+        # return redirect('/thank_you')
+
+    # return the empty form
+    return render_template('covid/upload_data_form.html', form=form)
 
 
 @main.route('/ml_datasets/')

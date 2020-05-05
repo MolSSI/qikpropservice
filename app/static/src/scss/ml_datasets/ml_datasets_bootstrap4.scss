@@ -1,6 +1,9 @@
 @import "variables";
 @import "../../../node_modules/bootstrap/scss/bootstrap";
 
+.help-block {
+  color: red;
+}
 
 $break-small: 576px;
 

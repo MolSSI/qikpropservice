@@ -1,6 +1,5 @@
 {% extends "base.html" %}
-{#{% extends "bootstrap/base.html" %}#}
-{% import "bootstrap/wtf.html" as wtf %}
+
 
 {% block styles %}
     {{ super() }}
@@ -25,36 +24,10 @@
             <h3 class="text-center my-auto">COVID Upload Data </h3>
         </div>
 
-      <p>Add comments here </p>
+      <p>Thank you </p>
 
     </div>
 
-    <!------------------ Upload data form --------------------->
-    <div class="container">
-
-        <h1>Upload data</h1>
-{#        <form class="form form-horizontal" method="post" role="form" novalidate>#}
-          <form class="form form-horizontal" method="post" role="form" novalidate enctype="multipart/form-data">
-
-            {{ form.hidden_tag() }}
-            {{ wtf.form_errors(form, hiddens="only") }}
-{#            {{ form.csrf_token() }}#}
-
-            {{ wtf.quick_form(form, button_map={'submit': 'primary'}) }}
-{#            <p>#}
-{#                {{ wtf.form_field(form.name) }}<br>#}
-{##}
-{#            </p>#}
-{#            <p>#}
-{#                {{ form.email.label }}<br>#}
-{#                {{ form.email(size=50) }}#}
-{#            </p>#}
-{#            <p>{{ form.validat() }} {{ form.remember_me.label }}</p>#}
-{##}
-{#            <p>{{ form.submit() }}</p>#}
-        </form>
-
-    </div>
 
 
     <div id="dialog-message" title="COVID">
