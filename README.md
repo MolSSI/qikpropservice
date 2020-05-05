@@ -1,5 +1,4 @@
-[![Build Status](https://travis-ci.com/MolSSI/QCArchiveWebapps.svg?token=66tFeohM6UiDzZMw65q9&branch=master)](https://travis-ci.com/MolSSI/QCArchiveWebapps)
-[![codecov](https://codecov.io/gh/MolSSI/QCArchiveWebapps/branch/master/graph/badge.svg?token=xPgDkNsfxk)](https://codecov.io/gh/MolSSI/QCArchiveWebapps)
+[![Build Status](https://travis-ci.com/MolSSI/covid_apis.svg?branch=master)](https://travis-ci.com/MolSSI/covid_apis)
 
 MolSSI COVID APIs
 ========================
