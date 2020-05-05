@@ -57,6 +57,5 @@ redis-stable/
 node_modules/
 
 package-lock.json
-data/
+docker_data/
 *.log
-logs/qcarchive_webapps.log
