@@ -49,10 +49,12 @@ if __name__ == "__main__":
 
         extras_require={
             'tests': [
+                "pytest",
+                "pytest-cov",
             ],
         },
 
-        tests_require=[],
+        tests_require=["pytest", "pytest-cov"],
 
         classifiers=[
             'Development Status :: 4 - Beta',
