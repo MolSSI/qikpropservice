@@ -17,7 +17,7 @@ services:
 #      - MONGO_URI=$MONGO_URI
       - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
     volumes:
-      - ./data/app-data:/var/www/logs
+      - ./docker_data/app-data:/var/www/logs
     depends_on:
       - mongo_service
     networks:
@@ -39,7 +39,7 @@ services:
       MONGODB_DATA_DIR: /data/db
       MONDODB_LOG_DIR: /dev/null
     volumes:
-      - ./data/mongodb-data:/data/db
+      - ./docker_data/mongodb-data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - backend
@@ -60,7 +60,7 @@ services:
       - "80:80"
       - "443:443"
     volumes:
-      - ./data/nginx-data:/var/log/nginx
+      - ./docker_data/nginx-data:/var/log/nginx
     depends_on:
       - flask
     networks:
