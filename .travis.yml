@@ -24,13 +24,12 @@ before_install:
   - python -V
 
 install:
-  - conda create -n covid_apis python=$TRAVIS_PYTHON_VERSION
-  - source activate covid_apis
   - pip install -r requirements.txt
   - pip install pytest-cov codecov
   - cd app/static
   - sudo apt-get install npm
   - sudo npm install
+  - cd ../..
 
 before_script:
   - sleep 15    # fixes an issue with travis,
