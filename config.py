@@ -25,7 +25,7 @@ class Config:
     SSL_REDIRECT = False
 
     # Admin login
-    APP_ADMIN = os.environ.get('APP_ADMIN', 'daltarawy@vt.edu')
+    APP_ADMIN = os.environ.get('APP_ADMIN', 'lnaden@vt.edu')
     EMAIL_CONFIRMATION_ENABLED = False
 
     # log page access to db or not
@@ -35,7 +35,7 @@ class Config:
 
     MONGODB_SETTINGS = {
         'host': os.environ.get('MONGO_URI',
-                               "mongodb://<dbuser>:<dbpassword>localhost::27017/covid_apis_db"),
+                               "mongodb://<dbuser>:<dbpassword>localhost:27017/covid_apis_db"),
     }
 
     @staticmethod

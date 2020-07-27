@@ -25,5 +25,5 @@ geoip2
 #
 gunicorn
 
-# optional
-qcportal
+# App-specific stuff
+pyyaml

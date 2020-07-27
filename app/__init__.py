@@ -81,6 +81,7 @@ def create_app(config_name):
         logger.debug('Creating assets..')
         from .assets import compile_assets
         compile_assets(app)
+        logger.debug('App Ready..')
 
         return app
 

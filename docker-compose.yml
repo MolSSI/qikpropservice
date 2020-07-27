@@ -9,11 +9,12 @@ services:
     # don't specify names if you will do scaling/replicas
     container_name: covid_flask
     build: .
-#    env_file: .env
+    # env_file: .env
     restart: unless-stopped
     environment:
       # set by a .env file (add to production)
-      - FLASK_CONFIG=production
+#      - FLASK_CONFIG=production
+      - FLASK_CONFIG=development
 #      - MONGO_URI=$MONGO_URI
       - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
     volumes:
@@ -53,9 +54,9 @@ services:
     restart: always
     environment:
       APP_ENV: "prod"
-      APP_NAME: "webserver"
+      APP_NAME: "covid_webserver"
       APP_DEBUG: "true"
-      SERVICE_NAME: "webserver"
+      SERVICE_NAME: "covid_webserver"
     ports:
       - "80:80"
       - "443:443"

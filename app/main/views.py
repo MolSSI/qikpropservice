@@ -1,14 +1,16 @@
-from flask import render_template, redirect, url_for, abort, flash, request,\
-    current_app, make_response, send_from_directory
+from flask import render_template, abort, flash, request,\
+    current_app, jsonify, send_file
 from werkzeug.utils import secure_filename
 
 from . import main
 from .. import cache
-import qcportal as plt
+# import qcportal as plt
 from ..models import save_access
 import logging
-from .forms import UploadForm
+from .forms import ProgramForm
 import os
+
+from ..qp import run_qikprop
 
 
 logger = logging.getLogger(__name__)
@@ -16,7 +18,6 @@ logger = logging.getLogger(__name__)
 #  Logging to console in heroku
 logger.addHandler(logging.StreamHandler())
 logger.setLevel(logging.INFO)
-
 
 
 @main.route('/shutdown')
@@ -30,19 +31,61 @@ def server_shutdown():
     return 'Shutting down...'
 
 
-@main.route('/')
-def index():
-    apps = [
-        {'name': 'Machine Learning Datasets', 'link': '/ml_datasets/'},
-        {'name': 'MolSSI COIVD Form template', 'link': '/covid_form/'},
+# @main.route('/')
+# def index():
+#     apps = [
+#         {'name': 'Machine Learning Datasets', 'link': '/ml_datasets/'},
+#         {'name': 'MolSSI COIVD Form template', 'link': '/covid_form/'},
+#
+#     ]
+#     return render_template('index.html', apps=apps)
 
-    ]
-    return render_template('index.html', apps=apps)
+@main.route('/', methods=['GET', 'POST'])
+def index():
+    form = ProgramForm()
+
+    def debug(file, filename, kwargs):
+        with open(filename, 'w') as f:
+            f.write("")
+        return filename
+
+    # if form data is valid, go to success
+    if form.validate_on_submit():
+        file = form.input_file.data
+        filename = secure_filename(file.filename)
+        # file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
+        flash(f'Thank you for submitting {filename}, Data was uploaded, now processing...')
+
+        # Run the code
+        output_file = run_qikprop(file, filename, {})
+        # output_file = debug(file, filename, {})
+        try:
+            return send_file(output_file, attachment_filename='qp_output.tar.gz', as_attachment=True)
+        except Exception as e:
+            flash(e)
+
+    # return the empty form
+    return render_template('covid/upload_data_form.html', form=form)
+
+
+@main.route('/api/', methods=['GET', 'POST'])
+def api_call():
+    # if not request.json:
+    #     abort(400)
+    print(request.args)
+    data = request.get_data()
+    incoming = request.files['data']
+    print(len(data))
+    print(incoming)
+    incoming.save(os.path.join(current_app.config['UPLOAD_FOLDER'], 'toy.csv'))
+    # with open(os.path.join(current_app.config['UPLOAD_FOLDER'], 'toy.csv'), 'wb') as f:
+    #     f.write(incoming)
+    return jsonify(request.json), 202
 
 
 @main.route('/covid_form/', methods=['GET', 'POST'])
 def app_in_iframe():
-    form = UploadForm()
+    form = ProgramForm()
 
     # if form data is valid, go to success
     if form.validate_on_submit():
@@ -65,6 +108,7 @@ def ml_datasets():
 
     return render_template('ml_datasets.html')
 
+
 @main.route('/log_access/<access_type>/')
 def log_download(access_type):
 
@@ -76,6 +120,7 @@ def log_download(access_type):
                 dataset_name=ds_name, download_type=ds_type)
 
     return {'success': True}
+
 
 @cache.cached()  # timeout in config
 def _get_qcarchive_collections():
@@ -133,6 +178,6 @@ def _get_qcarchive_collections():
 @main.route('/ml_datasets_list/')
 def ml_datasets_list():
 
-    data = _get_qcarchive_collections()
+    # data = _get_qcarchive_collections()
 
-    return {'data': data}
+    return {'data': None}

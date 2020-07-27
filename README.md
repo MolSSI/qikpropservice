@@ -9,7 +9,7 @@ Description
 How to run and use for development:
 ===================================
 
-### 1- Install Python requiremets:
+### 1- Install Python requirements:
 
 Run in shell, create python env, and install requirements:
 
@@ -46,7 +46,7 @@ You **don't** have to create a database after your install mongodb because the a
  it later.
 
 
-Note: In the future when you need to, add PUBLICALLY shared environment attributes to `.flaskenv` file, with key values that will be exported to the environment (dev, prod, etc).
+Note: In the future when you need to, add PUBLICLY shared environment attributes to `.flaskenv` file, with key values that will be exported to the environment (dev, prod, etc).
 Use `.env` file for private variables that won't be shared or pushed to Github. Note that `.env` overrides `.flaskenv`, and both override `config.py`.
 
 
