@@ -18,7 +18,12 @@ class ProgramForm(FlaskForm):
                      'z'  # BOSS/MCPRO Z-matrix Files
                      ], "Only Maestro, MDL, Mol2, PDB, or BOSS/MCPRO Z-matrix Files are allowed")
     ])
-    fast = BooleanField(label="Fast Mode")
+    fast = BooleanField(label="Fast Processing Mode")
+    similar = IntegerField(label="Generate this number of most similar molecules relative to last processed",
+                           default=20,
+                           validators=[Optional(), NumberRange(min=0)])
+
+    # Stuff below here not really implemented
     neutralize = BooleanField(label="Neutralize molecules [-neut] (Maestro-formats only)", default="checked")
     nosa = BooleanField(label="Don't generate the QPSA file with additional data [-nosa], will not be in returned "
                               "tarball")
@@ -32,6 +37,13 @@ class ProgramForm(FlaskForm):
     molecule_upper_bound = IntegerField(label="hi:",
                                         validators=[Optional(), NumberRange(min=0)])
     submit = SubmitField('Run!')
+
+    @classmethod
+    def program_kwargs_map(cls):
+        """
+        Helper function to get the implemented keyword arguments for the form and their map to the QPlimits skeleton
+        """
+        return {"fast": ""}
 
 
 class NameForm(FlaskForm):

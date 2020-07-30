@@ -1,1 +1,1 @@
-from .runqp import run_qikprop
+from .runqp import run_qikprop, OptionMap

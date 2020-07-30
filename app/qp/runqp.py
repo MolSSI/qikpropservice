@@ -6,6 +6,7 @@ import pathlib
 import contextlib
 import tarfile
 import hashlib
+from abc import ABC, abstractmethod
 
 hasher = hashlib
 
@@ -15,6 +16,97 @@ default_qp_options = {
     "proc_mode": "normal",
     "nmol": 20
 }
+
+
+class Option(ABC):
+
+    def __init__(self, *args):
+        if not args:
+            self._value = self.default
+        else:
+            self._value = args[0]
+
+    @abstractmethod
+    def map_value(self, val):
+        pass
+
+    @property
+    @abstractmethod
+    def option_name(self) -> str:
+        pass
+
+    @property
+    @abstractmethod
+    def default(self):
+        pass
+
+    @property
+    def value(self):
+        return self.map_value(self._value)
+
+    @property
+    def option(self):
+        return {self.option_name, self.value}
+
+
+class Fast(Option):
+
+    @property
+    def default(self):
+        return "normal"
+
+    @property
+    def option_name(self) -> str:
+        return "proc_mode"
+
+    def map_value(self, val):
+        if val:  # Maps True -> Fast
+            return "fast"
+        return "normal"
+
+
+class Similar(Option):
+
+    @property
+    def default(self):
+        return 20
+
+    @property
+    def option_name(self) -> str:
+        return "nmol"
+
+    def map_value(self, val):
+        return int(val)
+
+
+class OptionMap:
+    methods = {
+        "fast": Fast,
+        "similar": Similar
+    }
+
+    def __init__(self, **kwargs):
+        self._options = {}
+        for known_option, known_map in self.methods.items():
+            option_map = known_map()
+            if known_option in kwargs:
+                passed_value = kwargs[known_option]
+                self._options[option_map.option_name] = option_map.map_value(passed_value)
+            else:
+                self._options[option_map.option_name] = option_map.default
+
+    @classmethod
+    def known_methods(cls):
+        return [method for method in cls.methods.keys()]
+
+    @classmethod
+    def generate_options(cls, **kwargs):
+        generator = cls(**kwargs)
+        return generator.options
+
+    @property
+    def options(self):
+        return self._options
 
 
 @contextlib.contextmanager
@@ -41,12 +133,7 @@ def run_qikprop(data, filename, options):
     # Find the qikprop dir
     qp_dir = os.path.join(script_dir, 'QikProp')
     # Parse the options
-    run_options = {}
-    for option, default_value in default_qp_options.items():
-        if option in options:
-            run_options[option] = options[option]
-        else:
-            run_options[option] = default_value
+    run_options = OptionMap.generate_options(**options)
 
     # Create the temporary space
     with temp_set_environ("QPdir", qp_dir):

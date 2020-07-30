@@ -6,6 +6,7 @@
     {{ super() }}
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     {% assets 'ml_datasets_css' %}
         <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
@@ -33,6 +34,10 @@
     <div class="container">
 
         <h1>QikProp v3.0 Computation</h1>
+        <a href="/static/pdf/QP30.manual.pdf" download="QP30.manual.pdf">
+            <button class="btn-download1"><i class="fa fa-download"></i> Download QikProp Manual</button>
+        </a>
+        <br><br>
 {#        <form class="form form-horizontal" method="post" role="form" novalidate> #}
 {#          <form class="form form-horizontal" method="post" role="form" novalidate enctype="multipart/form-data"> #}
 {# #}
@@ -49,25 +54,29 @@
             {{ wtf.form_errors(form, hiddens="only") }}
 
             {{wtf.form_field(form.input_file)}}
-            <h2>Everything below here doesn't work and are experimental things we're working on.</h2>
-            {{wtf.form_field(form.fast) }}
-            {{wtf.form_field(form.neutralize)}}
-            {{wtf.form_field(form.nosa)}}
-
-            {{wtf.form_field(form.sim)}}
-            {{wtf.form_field(form.nsim)}}
 
 
-            {# {{wtf.form_field(form.molecule_bounds)}} #}
-            Process the specified range of molecules from the input file. [-n lo:hi]
-            <div class="form-row">
-            <div class="form-group col-md-6">
-            {{wtf.form_field(form.molecule_lower_bound)}}
-            </div>
-            <div class="form-group col-md-6">
-            {{wtf.form_field(form.molecule_upper_bound)}}
-            </div>
-            </div>
+              {{wtf.form_field(form.fast) }}
+              {{wtf.form_field(form.similar) }}
+{#            <h2>Everything below here doesn't work and are experimental things we're working on.</h2> #}
+{#            {{wtf.form_field(form.neutralize)}} #}
+{#            {{wtf.form_field(form.nosa)}} #}
+{# #}
+{#            {{wtf.form_field(form.sim)}} #}
+{#            {{wtf.form_field(form.nsim)}} #}
+{# #}
+{# #}
+{#            {{wtf.form_field(form.molecule_bounds)}} #}
+{#            Process the specified range of molecules from the input file. [-n lo:hi] #}
+{#            <div class="form-row"> #}
+{#            <div class="form-group col-md-6"> #}
+{#            {{wtf.form_field(form.molecule_lower_bound)}} #}
+{#            </div> #}
+{#            <div class="form-group col-md-6"> #}
+{#            {{wtf.form_field(form.molecule_upper_bound)}} #}
+{#            </div> #}
+{#            </div> #}
+{#            <h2> Submit button still works, don't comment it out </h2> #}
             <p>{{ wtf.form_field(form.submit, button_map={'submit': 'primary'}) }}</p>
         </form>
 
