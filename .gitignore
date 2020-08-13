@@ -60,6 +60,8 @@ package-lock.json
 docker_data/
 *.log
 
-# Make sure qp is never added
+# Make sure QikProp and its files are never added
 qikprop
 QikProp/
+staging
+

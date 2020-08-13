@@ -17,7 +17,7 @@ class ProgramForm(FlaskForm):
                      'pdb',  # PDB files
                      'z'  # BOSS/MCPRO Z-matrix Files
                      ], "Only Maestro, MDL, Mol2, PDB, or BOSS/MCPRO Z-matrix Files are allowed")
-    ])
+    ])  # This list isn't really accurate for v3
     fast = BooleanField(label="Fast Processing Mode")
     similar = IntegerField(label="Generate this number of most similar molecules relative to last processed",
                            default=20,
@@ -36,7 +36,7 @@ class ProgramForm(FlaskForm):
                                         validators=[Optional(), NumberRange(min=0)])
     molecule_upper_bound = IntegerField(label="hi:",
                                         validators=[Optional(), NumberRange(min=0)])
-    submit = SubmitField('Run!')
+    submit = SubmitField('Run QikProp!')
 
     @classmethod
     def program_kwargs_map(cls):
