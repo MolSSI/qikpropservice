@@ -19,7 +19,7 @@ class Log(db.DynamicDocument):   # flexible schema, can have extra attributes
         'homepage', 'download', ...
 
     ip_address: str
-        IP address of the cclient requesting the basis set
+        IP address of the client requesting the basis set
     date: datetime
         date of the search/download in the server local time
 
@@ -29,8 +29,7 @@ class Log(db.DynamicDocument):   # flexible schema, can have extra attributes
     page = db.StringField()
     access_type = db.StringField()
 
-    dataset_name = db.StringField()
-    download_type = db.StringField()
+    error = db.StringField()
 
     date = db.DateTimeField(default=datetime.datetime.utcnow)
 
@@ -39,7 +38,6 @@ class Log(db.DynamicDocument):   # flexible schema, can have extra attributes
     header_email = db.StringField(max_length=100)
     ip_address = db.StringField()
     referrer = db.StringField(max_length=512)
-
 
     # extra computed geo data
     city = db.StringField()
@@ -53,7 +51,7 @@ class Log(db.DynamicDocument):   # flexible schema, can have extra attributes
     meta = {
         'strict': False,     # allow extra fields
         'indexes': [
-            "page", "access_type", "date"
+            "page", "interaction", "date"
         ]
     }
 

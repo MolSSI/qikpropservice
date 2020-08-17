@@ -40,6 +40,7 @@ def index():
         return filename
 
     # if form data is valid, go to success
+    save_access(page="homepage", access_type='landing')
     if form.validate_on_submit():
         file = form.input_file.data
         filename = secure_filename(file.filename)
@@ -52,8 +53,10 @@ def index():
         try:
             output_file = run_qikprop(file, filename, options)
             # output_file = debug(file, filename, {})
+            save_access(page="homepage", access_type="run")
             return send_file(output_file, attachment_filename='qp_output.tar.gz', as_attachment=True)
         except Exception as e:
+            save_access(page="homepage", access_type="run", error=str(e))
             flash(e)
 
     # return the empty form
@@ -77,15 +80,6 @@ def index():
 
 
 # Old ML datasets, probably remove
-# @main.route('/ml_datasets/')
-# def ml_datasets():
-#
-#     logger.info("ML Home page access.")
-#     save_access(page='ml_datasets', access_type='homepage')
-#
-#     return render_template('ml_datasets.html')
-
-
 # @main.route('/log_access/<access_type>/')
 # def log_download(access_type):
 #

@@ -21,6 +21,8 @@ services:
       - ./docker_data/app-data:/var/www/logs
     depends_on:
       - mongo_service
+    ports:
+      - "5000:5000"
     networks:
       - frontend
       - backend
@@ -45,27 +47,27 @@ services:
     networks:
       - backend
 
-  webserver:
-    container_name: covid_webserver
-    build:
-      context: nginx
-      dockerfile: Dockerfile
-    image: webserver:latest
-    restart: always
-    environment:
-      APP_ENV: "prod"
-      APP_NAME: "covid_webserver"
-      APP_DEBUG: "true"
-      SERVICE_NAME: "covid_webserver"
-    ports:
-      - "5000:80"
-      - "443:443"
-    volumes:
-      - ./docker_data/nginx-data:/var/log/nginx
-    depends_on:
-      - flask
-    networks:
-      - frontend
+#  webserver:
+#    container_name: covid_webserver
+#    build:
+#      context: nginx
+#      dockerfile: Dockerfile
+#    image: webserver:latest
+#    restart: always
+#    environment:
+#      APP_ENV: "prod"
+#      APP_NAME: "covid_webserver"
+#      APP_DEBUG: "true"
+#      SERVICE_NAME: "covid_webserver"
+#    ports:
+#      - "5000:80"
+#      - "443:443"
+#    volumes:
+#      - ./docker_data/nginx-data:/var/log/nginx
+#    depends_on:
+#      - flask
+#    networks:
+#      - frontend
 
 networks:
   frontend:
