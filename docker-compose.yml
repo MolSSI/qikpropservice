@@ -22,7 +22,7 @@ services:
     depends_on:
       - mongo_service
     ports:
-      - "5000:5000"
+      - "5001:5001"
     networks:
       - frontend
       - backend

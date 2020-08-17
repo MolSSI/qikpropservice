@@ -168,5 +168,7 @@ def run_qikprop(data, filename, options):
             # Copy to the staging directory, add a bit of hash data to avoid overwrite
             stage_name = tarball_name + '.' + tar_hash
             stage_path = os.path.join(script_dir, "staging", stage_name)
+            # Attempt to make path
+            pathlib.Path(os.path.join(script_dir, "staging")).mkdir(exist_ok=True)
             shutil.copyfile(tarball_name, os.path.join(script_dir, "staging", stage_name))
     return stage_path

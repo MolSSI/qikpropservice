@@ -48,10 +48,10 @@ USER www
 
 
 # Listens on port, doesn't publish it. Publish by -p or ports in docker-compose
-EXPOSE 5000
+EXPOSE 5001
 
 # Run in Exec form, can't be overriden
-ENTRYPOINT [ "gunicorn", "--bind", "0.0.0.0:5000", "covid_apis:app"]
+ENTRYPOINT [ "gunicorn", "--bind", "0.0.0.0:5001", "covid_apis:app"]
 # Params to pass to ENTRYPOINT, and can be overriden when running containers
 CMD ["-w", "2", "--access-logfile", "/var/www/logs/access.log", "--error-logfile", "/var/www/logs/error.log"]
 

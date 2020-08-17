@@ -81,3 +81,6 @@ docker-compose up --build
 
 1. For Docker deployment config example, check this
 https://www.digitalocean.com/community/tutorials/how-to-set-up-flask-with-mongodb-and-docker
+
+2. A service file has been included for getting this running as a service. See this url for more details
+https://community.hetzner.com/tutorials/docker-compose-as-systemd-service 
