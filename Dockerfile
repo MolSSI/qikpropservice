@@ -16,7 +16,7 @@ COPY ./app/qp/QikProp /QikProp
 ENV QPdir /QikProp
 
 # what's only needed for continuumio/miniconda3
-RUN apt-get update && \
+RUN apt-get --allow-releaseinfo-change update && \
     pip install --upgrade pip && \
     apt-get install -y --no-install-recommends npm && \
     # QikProp thigs for the ELF 32-bit LSB executable that it is
@@ -51,7 +51,7 @@ USER www
 EXPOSE 5001
 
 # Run in Exec form, can't be overriden
-ENTRYPOINT [ "gunicorn", "--bind", "0.0.0.0:5001", "covid_apis:app"]
+ENTRYPOINT [ "gunicorn", "--bind", "0.0.0.0:5001", "--timeout", "0", "covid_apis:app"]
 # Params to pass to ENTRYPOINT, and can be overriden when running containers
 CMD ["-w", "2", "--access-logfile", "/var/www/logs/access.log", "--error-logfile", "/var/www/logs/error.log"]
 
