@@ -14,7 +14,7 @@ if os.environ.get('FLASK_COVERAGE'):
 import sys
 import click
 # from flask_migrate import Migrate, upgrade
-from app import create_app, db
+from app import create_app, db, make_celery
 import logging.config
 import yaml
 
@@ -26,6 +26,14 @@ with open('logging_config.yml', 'r') as file:
 logger = logging.getLogger(__name__)
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
+app.config.update(
+    # URL here is the name of the docker-compose service name for DNS resolution
+    # https://stackoverflow.com/a/54968946/10364409
+    CELERY_BROKER_URL='redis://redis:6379',
+    CELERY_RESULT_BACKEND='redis://redis:6379'
+)
+
+celery = make_celery(app)
 
 
 @app.cli.command()

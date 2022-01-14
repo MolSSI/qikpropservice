@@ -28,3 +28,7 @@ gunicorn
 
 # App-specific stuff
 pyyaml
+
+# Celery and redis
+celery
+redis
