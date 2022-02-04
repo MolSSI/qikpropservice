@@ -19,8 +19,11 @@ services:
       - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
     volumes:
       - ./docker_data/app-data:/var/www/logs
+      - qpout:/var/www/qpout
+      - qpin:/var/www/qpin
     depends_on:
       - mongo_service
+      - redis
     ports:
       - "5001:5001"
     networks:
@@ -44,6 +47,36 @@ services:
     volumes:
       - ./docker_data/mongodb-data:/data/db
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - backend
+
+  redis:
+    # env_file: ".env"
+    image: "redis:5.0.4-stretch"
+    restart: unless-stopped
+    stop_grace_period: 3s
+    volumes:
+      - redis:/data
+    networks:
+      - backend
+
+  celery_worker:
+    build: .
+    environment:
+      # set by a .env file (add to production)
+#      - FLASK_CONFIG=production
+      - FLASK_CONFIG=development
+      - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
+    entrypoint: celery -A covid_apis.celery worker -B -l debug
+    command: ""
+    depends_on:
+      - redis
+    #env_file: .env
+    restart: unless-stopped
+    stop_grace_period: 3s
+    volumes:
+      - qpout:/var/www/qpout
+      - qpin:/var/www/qpin
     networks:
       - backend
 
@@ -74,5 +107,10 @@ networks:
       driver: bridge
   backend:
       driver: bridge
+
+volumes:
+  qpout:
+  qpin:
+  redis:
 
 

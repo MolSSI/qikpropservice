@@ -9,6 +9,7 @@ from flask_caching import Cache
 from flask_cors import CORS
 from flask_mongoengine import MongoEngine
 from flask_admin import Admin
+from celery import Celery
 import logging
 
 logger = logging.getLogger(__name__)
@@ -27,6 +28,7 @@ cors = CORS()
 
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
+
 
 def create_app(config_name):
     logger.info(f"logger: Creating flask app with config {config_name}")
@@ -87,3 +89,20 @@ def create_app(config_name):
 
     return app
 
+
+# URL here is the name of the docker-compose service name for DNS resolution
+# https://stackoverflow.com/a/54968946/10364409
+CELERY_BROKER_URL = 'redis://redis:6379',
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+
+
+def make_celery(app_name=__name__):
+    celery = Celery(
+        app_name,
+        backend=CELERY_RESULT_BACKEND,
+        broker=CELERY_BROKER_URL
+    )
+    return celery
+
+
+celery = make_celery()
