@@ -19,7 +19,8 @@ services:
       - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
     volumes:
       - ./docker_data/app-data:/var/www/logs
-      - ./docker_data/worker-data:/app/public
+      - qpout:/var/www/qpout
+      - qpin:/var/www/qpin
     depends_on:
       - mongo_service
       - redis
@@ -55,7 +56,7 @@ services:
     restart: unless-stopped
     stop_grace_period: 3s
     volumes:
-      - ./docker_data/redis-data:/data
+      - redis:/data
     networks:
       - backend
 
@@ -74,7 +75,8 @@ services:
     restart: unless-stopped
     stop_grace_period: 3s
     volumes:
-      - ./docker_data/worker-data:/app/public
+      - qpout:/var/www/qpout
+      - qpin:/var/www/qpin
     networks:
       - backend
 
@@ -105,5 +107,10 @@ networks:
       driver: bridge
   backend:
       driver: bridge
+
+volumes:
+  qpout:
+  qpin:
+  redis:
 
 

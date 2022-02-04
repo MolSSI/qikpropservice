@@ -1,15 +1,18 @@
 from flask import render_template, abort, flash, request,\
-    current_app, jsonify, send_file
+    current_app, send_from_directory
 from werkzeug.utils import secure_filename
 
 from . import main
-from .. import cache
+from .hashing import generate_checksum
+from .tasks import serve_file, run_qikprop_worker, inbound_staging, clear_output
+from ..constants import QP_OUTPUT_TAR_NAME
 from ..models import save_access
 import logging
 from .forms import ProgramForm
-import os
+from pathlib import Path
+import traceback
 
-from ..qp import run_qikprop, OptionMap
+from ..qp import OptionMap
 
 
 logger = logging.getLogger(__name__)
@@ -30,6 +33,31 @@ def server_shutdown():
     return 'Shutting down...'
 
 
+@main.route('/qpout/<checksum>')
+def get_qp_output(checksum):
+    possible_tarball = serve_file(checksum)
+    if isinstance(possible_tarball, Path):
+        fname = possible_tarball.name
+        if QP_OUTPUT_TAR_NAME in possible_tarball.name:
+            fname = QP_OUTPUT_TAR_NAME
+        return send_from_directory(str(possible_tarball.parent),
+                                   str(possible_tarball.name),
+                                   filename=fname,
+                                   as_attachment=True)
+    elif isinstance(possible_tarball, str):
+        return (f"Tasks for computations at ID {checksum} have not run or are not completed yet. "
+                f"Please try again shortly")
+    return f"Files for ID {checksum} are not ready yet. Please try again shortly."
+
+
+@main.route('/clear/<checksum>')
+def clear_qp_output(checksum):
+    cleared = clear_output(checksum)
+    if cleared:
+        return f"Directory at hash {checksum} has been cleared"
+    return f"No such output from {checksum} found. Nothing done"
+
+
 @main.route('/', methods=['GET', 'POST'])
 def index():
     form = ProgramForm()
@@ -42,22 +70,25 @@ def index():
     # if form data is valid, go to success
     save_access(page="homepage", access_type='landing')
     if form.validate_on_submit():
+        hash = generate_checksum(request)  # Hash incomplete due to request not being read yet.
         file = form.input_file.data
+        # At this point the hash is fully constructed.
+        checksum = hash.hexdigest()
         filename = secure_filename(file.filename)
         # file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
-        flash(f'Thank you for submitting {filename}, Data was uploaded, now processing...')
+        flash(f'Thank you for submitting {filename}, Data was uploaded, now processing under hash: {checksum}')
         # Extract options
         options = {option: getattr(form, option).data for option in OptionMap.known_methods() if option in form}
-
+        save_access(page="homepage", access_type="run")
         # Run the code
         try:
-            output_file = run_qikprop(file, filename, options)
-            # output_file = debug(file, filename, {})
-            save_access(page="homepage", access_type="run")
-            return send_file(output_file, attachment_filename='qp_output.tar.gz', as_attachment=True)
+            staged_file = inbound_staging(file, filename, checksum)
+            print(f"File at invocation is {staged_file}")
+            run_qikprop_worker.delay(str(staged_file), options, checksum)
+            return render_template('covid/upload_data_form.html', form=form, hash=checksum)
         except Exception as e:
             save_access(page="homepage", access_type="run", error=str(e))
-            flash(e)
+            flash(traceback.format_exc())
 
     # return the empty form
     return render_template('covid/upload_data_form.html', form=form)
@@ -77,17 +108,3 @@ def index():
 #     # with open(os.path.join(current_app.config['UPLOAD_FOLDER'], 'toy.csv'), 'wb') as f:
 #     #     f.write(incoming)
 #     return jsonify(request.json), 202
-
-
-# Old ML datasets, probably remove
-# @main.route('/log_access/<access_type>/')
-# def log_download(access_type):
-#
-#     logger.info('log_access: '.format(request.args))
-#     ds_name = request.args.get('dataset_name', None)
-#     ds_type = request.args.get('download_type', None)
-#
-#     save_access(page='ml_datasets', access_type=access_type,
-#                 dataset_name=ds_name, download_type=ds_type)
-#
-#     return {'success': True}

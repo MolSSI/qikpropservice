@@ -13,6 +13,10 @@ def compile_assets(app):
                        filters='jsmin',
                        output='dist/js/main.min.js')
 
+    bundles['file_upload_progress'] = Bundle('src/js/file_upload_progress.js',
+                       filters='jsmin',
+                       output='dist/js/upload.min.js')
+
     bundles['ml_datasets_css'] = Bundle('src/scss/ml_datasets/ml_datasets_bootstrap4.scss',
                          depends='**/*.scss',
                          filters='libsass',

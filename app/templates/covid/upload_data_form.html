@@ -49,7 +49,7 @@
 {#        </form> #}
 
 <!--        Trial form based on parts-->
-        <form class="form form-horizontal" method="post" role="form" novalidate enctype="multipart/form-data">
+        <form class="form form-horizontal" method="post" role="form" novalidate enctype="multipart/form-data" id="qpform">
             {{ form.hidden_tag() }}
             {{ wtf.form_errors(form, hiddens="only") }}
 
@@ -98,6 +98,15 @@
 
     {% include 'message_dialog.html' %}
 
+    {% if hash is defined %}  <!-- Make sure hash exits before showing the details-->
+        <div class="mb-5">
+            <div class="row justify-content-center my-5">
+                <h3>Files will be at
+                    <a class='btn btn-link' href='/qpout/{{ hash }}'><h3>https://qikprop.molssi.org/qpout/{{ hash }}</h3></a></h3>
+            </div>
+        </div>
+    {% endif %}
+
 {% endblock %}
 
 
@@ -107,9 +116,9 @@
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 
-    {% assets "ml_js" %}
-        <script type="text/javascript" src="{{ ASSET_URL }}"></script>
-    {% endassets %}
+<!--    {% assets "file_upload_progress" %}-->
+<!--        <script type="text/javascript" src="{{ ASSET_URL }}"></script>-->
+<!--    {% endassets %}-->
 
 
 {% endblock %}

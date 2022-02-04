@@ -29,6 +29,7 @@ cors = CORS()
 login_manager = LoginManager()
 login_manager.login_view = 'auth.login'
 
+
 def create_app(config_name):
     logger.info(f"logger: Creating flask app with config {config_name}")
 
@@ -89,18 +90,19 @@ def create_app(config_name):
     return app
 
 
-def make_celery(app):
+# URL here is the name of the docker-compose service name for DNS resolution
+# https://stackoverflow.com/a/54968946/10364409
+CELERY_BROKER_URL = 'redis://redis:6379',
+CELERY_RESULT_BACKEND = 'redis://redis:6379'
+
+
+def make_celery(app_name=__name__):
     celery = Celery(
-        app.import_name,
-        backend=app.config['CELERY_RESULT_BACKEND'],
-        broker=app.config['CELERY_BROKER_URL']
+        app_name,
+        backend=CELERY_RESULT_BACKEND,
+        broker=CELERY_BROKER_URL
     )
-    celery.conf.update(app.config)
-
-    class ContextTask(celery.Task):
-        def __call__(self, *args, **kwargs):
-            with app.app_context():
-                return self.run(*args, **kwargs)
-
-    celery.Task = ContextTask
     return celery
+
+
+celery = make_celery()
