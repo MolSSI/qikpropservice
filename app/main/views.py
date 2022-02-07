@@ -3,7 +3,7 @@ from flask import render_template, abort, flash, request,\
 from werkzeug.utils import secure_filename
 
 from . import main
-from .hashing import generate_checksum
+from .hashing import generate_checksum_file
 from .tasks import serve_file, run_qikprop_worker, inbound_staging, clear_output
 from ..constants import QP_OUTPUT_TAR_NAME
 from ..models import save_access
@@ -70,12 +70,9 @@ def index():
     # if form data is valid, go to success
     save_access(page="homepage", access_type='landing')
     if form.validate_on_submit():
-        hash = generate_checksum(request)  # Hash incomplete due to request not being read yet.
         file = form.input_file.data
-        # At this point the hash is fully constructed.
-        checksum = hash.hexdigest()
+        checksum = generate_checksum_file(file)  # Function resets seek
         filename = secure_filename(file.filename)
-        # file.save(os.path.join(current_app.config['UPLOAD_FOLDER'], filename))
         flash(f'Thank you for submitting {filename}, Data was uploaded, now processing under hash: {checksum}')
         # Extract options
         options = {option: getattr(form, option).data for option in OptionMap.known_methods() if option in form}

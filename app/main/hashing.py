@@ -19,8 +19,14 @@ class ChecksumCalcStream(object):
         return rv
 
 
-def generate_checksum(request):
+def generate_checksum_request(request):
     env = request.environ
     stream = ChecksumCalcStream(env['wsgi.input'])
     env['wsgi.input'] = stream
     return stream._hash
+
+
+def generate_checksum_file(file):
+    checksum = hashlib.sha1(file.read()).hexdigest()
+    file.seek(0)  # Reset the file seek to the start
+    return checksum
