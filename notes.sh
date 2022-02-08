@@ -46,3 +46,15 @@ apt-get install tcsh  # dont forget this.....
 # * Bundle the output files
 #   Includes QPSA.out, QP.out, QP.CSV, QPwarning. Optionally include QPlimits, Similar.CSV/Similar.name, and maaaaayyyybe QPlog (usually empty)
 # * Return the output files to the user
+
+# Notes on database management:
+# When changing the DB name during the rename, mongodb will not be re-initilized unless the original folder is empty
+# OR, you can spin up the mongodb container, attach, then run the following
+mongo admin -u root -p mypass  # from the docker-compose MONGO_INITDB_ROOT_USERNAME and MONGO_INITDB_ROOT_PASSWORD
+# Then:
+#   use qikpropservice_db
+# Then: {contents of the mongo-init.js in webapp}
+# Then:
+#   db.user.insert({name: "<whataver the user is in config.py>"})
+# Then exit the container, bring it down, start it all back up again
+

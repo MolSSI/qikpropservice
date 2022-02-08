@@ -26,11 +26,11 @@ def read_requirements():
 
 if __name__ == "__main__":
     setuptools.setup(
-        name='qikpropservice',
+        name='qikpropservicecli',
         version="0.2.0",
-        description='Web App and REST APIS for MolSSI QikProp as a Service',
-        author='Levi Naden and Doaa Altarawy',
-        author_email='lnaden@vt.edu, doaa.altarawy@gmail.com',
+        description='API wrapper and CLI for MolSSI QikProp as a Service',
+        author='Levi Naden',
+        author_email='lnaden@vt.edu',
         url="https://github.com/MolSSI/qikpropservice",
         license='BSD-3C',
 
