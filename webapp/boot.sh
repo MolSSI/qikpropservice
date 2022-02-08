@@ -10,4 +10,4 @@ while true; do
     sleep 5
 done
 
-exec gunicorn -b :5000 --access-logfile - --error-logfile - covid_apis:app
+exec gunicorn -b :5000 --access-logfile - --error-logfile - qikprip_service:app

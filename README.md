@@ -1,21 +1,32 @@
-[![Build Status](https://travis-ci.com/MolSSI/covid_apis.svg?branch=master)](https://travis-ci.com/MolSSI/covid_apis)
-[![codecov](https://codecov.io/gh/MolSSI/covid_apis/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/covid_apis)
+[![codecov](https://codecov.io/gh/MolSSI/qikpropservice/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/qikpropservice)
 
-MolSSI COVID APIs
-========================
+MolSSI QikProp As A Service
+===========================
 
-Description
+A repository for serving QikProp v3 as a webservice and API access point.
+ 
+This version of QikProp has been provided by [William L. Jorgensen](http://zarbi.chem.yale.edu) and hosted as
+a service by the [Molecular Sciences Software Institute (MolSSI)](https://molssi.org/). To report a
+problem or suggest improvements, please open an issue on
+[the Project GitHub](https://github.com/MolSSI/qikpropservice). Additional features and options will be
+added over time.
 
-How to run and use for development:
-===================================
+There are two main components for this project:
+* A web application where data can be uploaded in the form, and provides the endpoint for the API
+* A standalone API wrapper for CLI calls to the service hosted through the web app
+
+How to run and use the Web App for development
+==============================================
+
+The web app exists in the `webapp` folder of this repository.
 
 ### 1- Install Python requirements:
 
 Run in shell, create python env, and install requirements:
 
 ```bash
-conda create -n covid_apis 
-conda activate covid_apis
+conda create -n qikpropservice 
+conda activate qikpropservice
 pip install -r requirements.txt
 ```
 
@@ -27,7 +38,7 @@ which will be fetched from package.json automatically. In Ubuntu:
 
 ```bash
 sudo apt-get install nodejs
-cd covid_apis/app/static
+cd webapp/app/static
 npm install
 ```
 
@@ -36,9 +47,9 @@ npm install
 1. Install mongodb based on your operating system from 
 https://docs.mongodb.com/guides/server/install/
 
-2. Create a `covid_apis/.env` file, and add your DB URI to the config file:
+2. Create a `webapp/.env` file, and add your DB URI to the config file:
 ```.env
-MONGO_URI='mongodb://usr_username:user_password@localhost:27017/covid_apis_db'
+MONGO_URI='mongodb://usr_username:user_password@localhost:27017/qikpropservice_db'
 ```
 
 Replace `user_username` and `user_password` with your own values from your installation. 

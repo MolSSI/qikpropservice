@@ -15,7 +15,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 db = MongoEngine()
-app_admin = Admin(name='MolSSI COVID APIs Admin', template_mode='bootstrap3',
+app_admin = Admin(name='MolSSI QikProp Service Admin', template_mode='bootstrap3',
                   base_template='admin/custom_base.html')
 
 

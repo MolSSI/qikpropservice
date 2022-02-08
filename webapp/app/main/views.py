@@ -82,13 +82,13 @@ def index():
             staged_file = inbound_staging(file, filename, checksum)
             print(f"File at invocation is {staged_file}")
             run_qikprop_worker.delay(str(staged_file), options, checksum)
-            return render_template('covid/upload_data_form.html', form=form, hash=checksum)
+            return render_template('qikpropservice/upload_data_form.html', form=form, hash=checksum)
         except Exception as e:
             save_access(page="homepage", access_type="run", error=str(e))
             flash(traceback.format_exc())
 
     # return the empty form
-    return render_template('covid/upload_data_form.html', form=form)
+    return render_template('qikpropservice/upload_data_form.html', form=form)
 
 
 # Experimental, not working API sections

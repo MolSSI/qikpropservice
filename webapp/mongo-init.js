@@ -1,11 +1,11 @@
 db.createUser(
   {
-      user: "covid_user",
-      pwd: "covid_pass",
+      user: "qikprop_user",
+      pwd: "qikprop_pass",
       roles: [
           {
               role: "readWrite",
-              db: "covid_apis_db"
+              db: "qikpropservice_db"
           }
       ]
   }

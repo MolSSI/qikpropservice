@@ -1,5 +1,5 @@
 {
-  "name": "covid_apis",
+  "name": "qikpropservice",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -11,14 +11,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MolSSI/covid_apis.git"
+    "url": "git+https://github.com/MolSSI/qikpropservice.git"
   },
-  "author": "Doaa Altarawy",
+  "author": "Levi Naden and Doaa Altarawy",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MolSSI/covid_apis/issues"
+    "url": "https://github.com/MolSSI/qikpropservice/issues"
   },
-  "homepage": "https://github.com/MolSSI/covid_apis#readme",
+  "homepage": "https://github.com/MolSSI/qikpropservice#readme",
   "dependencies": {
     "bootstrap": "^4.4.1",
     "jquery": "^3.5.1",

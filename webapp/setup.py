@@ -12,7 +12,7 @@ try:
         from pip._internal.download import PipSession
     else:  # pip < 10 is not supported
         raise Exception('Please upgrade pip: pip install --upgrade pip')
-except ImportError as err: # for future changes in pip
+except ImportError as err:  # for future changes in pip
     print('New breaking changes in pip!!', err)
     sys.exit()
 
@@ -24,21 +24,14 @@ def read_requirements():
     return [ir.name for ir in install_reqs]
 
 
-def read_requirements():
-    """parses requirements from requirements.txt"""
-
-    install_reqs = parse_requirements('requirements.txt', session=PipSession())
-    return [ir.name for ir in install_reqs]
-
-
 if __name__ == "__main__":
     setuptools.setup(
-        name='COVID_APIS',
-        version="0.1.0",
-        description='REST APIS for MolSSI COVID19 project',
-        author='Doaa Altarawy',
-        author_email='doaa.altarawy@gmail.com',
-        url="https://github.com/MolSSI/covid_apis",
+        name='qikpropservice',
+        version="0.2.0",
+        description='Web App and REST APIS for MolSSI QikProp as a Service',
+        author='Levi Naden and Doaa Altarawy',
+        author_email='lnaden@vt.edu, doaa.altarawy@gmail.com',
+        url="https://github.com/MolSSI/qikpropservice",
         license='BSD-3C',
 
         packages=setuptools.find_packages(),

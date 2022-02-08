@@ -20,6 +20,7 @@ lib64
 __pycache__
 tmp
 
+
 # Installer logs
 pip-log.txt
 
@@ -59,6 +60,8 @@ node_modules/
 package-lock.json
 docker_data/
 *.log
+logs/*
+!logs/.keep
 
 # Make sure QikProp and its files are never added
 qikprop

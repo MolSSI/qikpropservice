@@ -96,7 +96,7 @@ def test_anonymous_user(flask_test_client):
     flask_test_client.get(auth_url+'/logout', follow_redirects=True)
     response = flask_test_client.get('/admin', follow_redirects=True)
     assert response.status_code == 200
-    assert 'MolSSI COVID APIs Admin' in response.get_data(as_text=True)
+    assert 'MolSSI QikPrip as a Service Admin' in response.get_data(as_text=True)
     assert not current_user.is_administrator()
     assert not current_user.can(Permission.READ)
 
