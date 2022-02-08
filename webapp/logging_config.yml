@@ -20,7 +20,7 @@ handlers:
     class: logging.handlers.RotatingFileHandler
     level: DEBUG
     formatter: hiformat
-    filename: logs/covid_apis.log
+    filename: logs/qikprop_service.log
     maxBytes: 5000000
 
 loggers:

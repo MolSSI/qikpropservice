@@ -7,7 +7,7 @@ services:
 
   flask:
     # don't specify names if you will do scaling/replicas
-    container_name: covid_flask
+    container_name: qikprop_flask
     build: .
     # env_file: .env
     restart: unless-stopped
@@ -16,7 +16,7 @@ services:
 #      - FLASK_CONFIG=production
       - FLASK_CONFIG=development
 #      - MONGO_URI=$MONGO_URI
-      - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
+      - MONGO_URI=mongodb://qikprop_user:qikprop_pass@mongo_service:27017/qikpropservice_db
     volumes:
       - ./docker_data/app-data:/var/www/logs
       - qpout:/var/www/qpout
@@ -32,14 +32,14 @@ services:
 
 
   mongo_service:
-    container_name: covid_mongo_service
+    container_name: qikprop_mongo_service
     image: mongo:4.2
     restart: unless-stopped
     command: mongod --auth
 #    env_file:
 #      - .dbpass
     environment:
-      MONGO_INITDB_DATABASE: covid_apis_db
+      MONGO_INITDB_DATABASE: qikpropservice_db
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: mypass
       MONGODB_DATA_DIR: /data/db
@@ -66,8 +66,8 @@ services:
       # set by a .env file (add to production)
 #      - FLASK_CONFIG=production
       - FLASK_CONFIG=development
-      - MONGO_URI=mongodb://covid_user:covid_pass@mongo_service:27017/covid_apis_db
-    entrypoint: celery -A covid_apis.celery worker -B -l debug
+      - MONGO_URI=mongodb://qikprop_user:qikprop_pass@mongo_service:27017/qikpropservice_db
+    entrypoint: celery -A qikprop_service.celery worker -B -l debug
     command: ""
     depends_on:
       - redis
@@ -81,7 +81,7 @@ services:
       - backend
 
 #  webserver:
-#    container_name: covid_webserver
+#    container_name: qikprop_webserver
 #    build:
 #      context: nginx
 #      dockerfile: Dockerfile
@@ -89,9 +89,9 @@ services:
 #    restart: always
 #    environment:
 #      APP_ENV: "prod"
-#      APP_NAME: "covid_webserver"
+#      APP_NAME: "qikprop_webserver"
 #      APP_DEBUG: "true"
-#      SERVICE_NAME: "covid_webserver"
+#      SERVICE_NAME: "qikprop_webserver"
 #    ports:
 #      - "5000:80"
 #      - "443:443"

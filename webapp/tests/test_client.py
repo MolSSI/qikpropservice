@@ -30,7 +30,7 @@ def test_ml_datasets_app(flask_test_client):
 
 def test_reaction_dataset_app(flask_test_client):
 
-    response = flask_test_client.get('/covid_form', follow_redirects=True)
+    response = flask_test_client.get('/qikprop_form', follow_redirects=True)
     assert response.status_code == 200
 
 

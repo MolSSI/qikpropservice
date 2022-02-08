@@ -33,12 +33,12 @@ def read_requirements():
 
 if __name__ == "__main__":
     setuptools.setup(
-        name='COVID_APIS',
-        version="0.1.0",
-        description='REST APIS for MolSSI COVID19 project',
-        author='Doaa Altarawy',
-        author_email='doaa.altarawy@gmail.com',
-        url="https://github.com/MolSSI/covid_apis",
+        name='qikpropservice',
+        version="0.2.0",
+        description='Web App and REST APIS for MolSSI QikProp as a Service',
+        author='Levi Naden and Doaa Altarawy',
+        author_email='lnaden@vt.edu, doaa.altarawy@gmail.com',
+        url="https://github.com/MolSSI/qikpropservice",
         license='BSD-3C',
 
         packages=setuptools.find_packages(),

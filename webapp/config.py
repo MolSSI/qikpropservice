@@ -19,8 +19,8 @@ class Config:
                             ['true', 'on', '1']
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    MAIL_SUBJECT_PREFIX = '[QCArchive]'
-    MAIL_SENDER = 'MolSSI COVID APIs Admin <admin@molssi.com>'
+    MAIL_SUBJECT_PREFIX = '[QikProp as a Service]'
+    MAIL_SENDER = 'MolSSI QikPrip as a Service Admin <admin@molssi.com>'
 
     SSL_REDIRECT = False
 
@@ -35,7 +35,7 @@ class Config:
 
     MONGODB_SETTINGS = {
         'host': os.environ.get('MONGO_URI',
-                               "mongodb://<dbuser>:<dbpassword>localhost:27017/covid_apis_db"),
+                               "mongodb://<dbuser>:<dbpassword>localhost:27017/qikpropservice_db"),
     }
 
     @staticmethod
@@ -56,7 +56,7 @@ class TestingConfig(Config):
     # disable CSRF protection in testing
     WTF_CSRF_ENABLED = False
     MONGODB_SETTINGS = {
-        'db': "test_covid_db",
+        'db': "test_qikpropservice_db",
     }
 
 
