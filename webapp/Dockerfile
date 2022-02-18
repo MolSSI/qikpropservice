@@ -19,7 +19,7 @@ ENV QPdir /QikProp
 RUN apt-get --allow-releaseinfo-change update && \
     pip install --upgrade pip && \
     apt-get install -y --no-install-recommends npm && \
-    # QikProp thigs for the ELF 32-bit LSB executable that it is
+    # QikProp things for the ELF 32-bit LSB executable that it is
     # Adding this here because I suspect its dangerous before previous
     dpkg --add-architecture i386 && \
     apt-get update  && \

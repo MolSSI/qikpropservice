@@ -14,8 +14,7 @@ if os.environ.get('FLASK_COVERAGE'):
 import sys
 import click
 # from flask_migrate import Migrate, upgrade
-from app import create_app, db, celery
-from app.factory import create_app_celery
+from app import create_app, celery
 import logging.config
 import yaml
 
@@ -28,7 +27,7 @@ logger = logging.getLogger(__name__)
 
 # app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 # Celery modular setup taken from: https://medium.com/@frassetto.stefano/flask-celery-howto-d106958a15fe
-app = create_app_celery(os.getenv('FLASK_CONFIG') or 'default', celery=celery)
+app = create_app(os.getenv('FLASK_CONFIG') or 'default', celery=celery)
 
 
 @app.cli.command()

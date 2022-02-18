@@ -1,0 +1,19 @@
+recursive-include app logs nginx tests uploads *.py *.json *.md
+
+include setup.py
+include README.md
+include LICENSE
+include MANIFEST.in
+
+include .dockerignore
+include .flaskenv
+include docker-compose.yml
+include Dockerfile
+include mongo-init.js
+include requirements.txt
+
+include versioneer.py
+include app/_version.py
+
+# Remove any quikprop data
+recursive-exclude app/qp QikProp staging

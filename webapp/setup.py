@@ -2,6 +2,8 @@ import setuptools
 import pip
 import sys
 
+import versioneer
+
 
 try:
     if pip.__version__ >= "19.3":
@@ -21,14 +23,15 @@ def read_requirements():
     """parses requirements from requirements.txt"""
 
     install_reqs = parse_requirements('requirements.txt', session=PipSession())
-    return [ir.name for ir in install_reqs]
+    return [ir.requirement for ir in install_reqs]
 
 
 if __name__ == "__main__":
     setuptools.setup(
-        name='qikpropservice',
-        version="0.2.0",
-        description='Web App and REST APIS for MolSSI QikProp as a Service',
+        name='qikpropwebapp',
+        version=versioneer.get_version(),
+        cmdclass=versioneer.get_cmdclass(),
+        description='Web App and REST API Endpoints for MolSSI QikProp as a Service',
         author='Levi Naden and Doaa Altarawy',
         author_email='lnaden@vt.edu, doaa.altarawy@gmail.com',
         url="https://github.com/MolSSI/qikpropservice",

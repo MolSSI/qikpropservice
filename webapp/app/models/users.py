@@ -1,4 +1,4 @@
-from .. import db, login_manager
+from ..factory import db, login_manager
 from datetime import datetime
 import hashlib
 from werkzeug.security import generate_password_hash, check_password_hash
