@@ -244,7 +244,7 @@ def qikprop_as_a_service(filepaths: Union[str, Path, List[Union[str, Path]]],
                          output_tar_names=None,
                          fast: bool = False,
                          similar: int = 20,
-                         server_uri: str = "https://qikprop.molssi.org/api",
+                         server_uri: str = "https://qikprop.molssi.org/api/v1",
                          non_exist_ok: bool = False
                          ):
     """
@@ -263,7 +263,7 @@ def qikprop_as_a_service(filepaths: Union[str, Path, List[Union[str, Path]]],
         QikProp Option, Fast processing mode
     similar: int, Default = 20
         QikProp Option, Number of similar molecules to return
-    server_uri: str, Default = "https://qikprop.molssi.org/api"
+    server_uri: str, Default = "https://qikprop.molssi.org/api/v1"
         API endpoint URI
     non_exist_ok: bool, Default = False
         Check if all input files exist or not, if not, an error will be raised
