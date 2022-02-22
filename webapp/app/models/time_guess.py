@@ -1,5 +1,5 @@
 import datetime
-from .. import db
+from ..factory import db
 from flask import request, current_app
 from flask_mongoengine import DoesNotExist
 

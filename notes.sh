@@ -3,7 +3,7 @@
 # The binary cannot run on OSX Catalina because its 32-bit
 # For testing, I put it in a docker image
 
-# The docker images didnt come with csh, so I had to install them
+# The docker images didn't come with csh, so I had to install them
 yum install csh  # it does tcsh
 
 # OR
@@ -26,7 +26,7 @@ apt-get install -y lib32z1  # https://unix.stackexchange.com/a/12957
 dpkg --add-architecture i386
 apt-get update
 apt-get install -y libgcc1:i386
-apt-get install tcsh  # dont forget this.....
+apt-get install tcsh  # don't forget this as the QikProp scripts need this.
 # Which will get everything
 
 

@@ -1,42 +1,29 @@
-import setuptools
-import pip
-import sys
+from setuptools import setup, find_packages
+import versioneer
 
+short_description = "QikProp v3 As a Service API Wrapper Library and CLI tool."
 
 try:
-    if pip.__version__ >= "19.3":
-        from pip._internal.req import parse_requirements
-        from pip._internal.network.session import PipSession
-    elif pip.__version__ >= "10.0" and pip.__version__ < "19.3":
-        from pip._internal.req import parse_requirements
-        from pip._internal.download import PipSession
-    else:  # pip < 10 is not supported
-        raise Exception('Please upgrade pip: pip install --upgrade pip')
-except ImportError as err:  # for future changes in pip
-    print('New breaking changes in pip!!', err)
-    sys.exit()
-
-
-def read_requirements():
-    """parses requirements from requirements.txt"""
-
-    install_reqs = parse_requirements('requirements.txt', session=PipSession())
-    return [ir.name for ir in install_reqs]
+    with open("README.md", "r") as handle:
+        long_description = handle.read()
+except FileNotFoundError:
+    long_description = short_description
 
 
 if __name__ == "__main__":
-    setuptools.setup(
-        name='qikpropservicecli',
-        version="0.2.0",
-        description='API wrapper and CLI for MolSSI QikProp as a Service',
+    setup(
+        name='qikpropservice',
+        version=versioneer.get_version(),
+        cmdclass=versioneer.get_cmdclass(),
+        description='API wrapper CLI and library for MolSSI QikProp as a Service',
         author='Levi Naden',
         author_email='lnaden@vt.edu',
         url="https://github.com/MolSSI/qikpropservice",
-        license='BSD-3C',
+        license='MIT',
 
-        packages=setuptools.find_packages(),
+        packages=find_packages(),
 
-        install_requires=read_requirements(),
+        install_requires=["requests", "click", "pydantic", "tqdm"],
 
         include_package_data=True,
 
@@ -55,4 +42,11 @@ if __name__ == "__main__":
             'Programming Language :: Python :: 3',
         ],
         zip_safe=True,
+        entry_points={
+            "console_scripts": [
+                "qikpropcli = qikpropservice:qpcli"
+            ]
+        },
+        long_description=long_description,
+        long_description_content_type="text/markdown"
     )

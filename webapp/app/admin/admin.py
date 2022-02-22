@@ -67,6 +67,6 @@ class LogView(ModelView):
 
 def add_admin_views():
     """Register views to admin"""
-    from .. import app_admin
+    from ..factory import app_admin
     app_admin.add_view(LogView(Log, name='Access Log'))
     app_admin.add_view(UserView(User, name='Users'))

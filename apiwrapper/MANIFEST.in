@@ -1,0 +1,9 @@
+recursive-include qikpropservice *.py *.json *.md
+
+include setup.py
+include README.md
+include LICENSE
+include MANIFEST.in
+
+include versioneer.py
+include qikpropservice/_version.py

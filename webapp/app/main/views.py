@@ -3,8 +3,8 @@ from flask import render_template, abort, flash, request,\
 from werkzeug.utils import secure_filename
 
 from . import main
-from .hashing import generate_checksum_file
-from .tasks import serve_file, run_qikprop_worker, inbound_staging, clear_output
+from app.hashing import generate_checksum_file
+from app.tasks import serve_file, run_qikprop_worker, inbound_staging_web, clear_output
 from ..constants import QP_OUTPUT_TAR_NAME
 from ..models import save_access
 import logging
@@ -79,7 +79,7 @@ def index():
         save_access(page="homepage", access_type="run")
         # Run the code
         try:
-            staged_file = inbound_staging(file, filename, checksum)
+            staged_file = inbound_staging_web(file, filename, checksum)
             print(f"File at invocation is {staged_file}")
             run_qikprop_worker.delay(str(staged_file), options, checksum)
             return render_template('qikpropservice/upload_data_form.html', form=form, hash=checksum)

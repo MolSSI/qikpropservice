@@ -1,5 +1,5 @@
 import datetime
-from .. import db
+from ..factory import db
 from flask import request, current_app
 from .geo_location_util import get_geoip2_data
 

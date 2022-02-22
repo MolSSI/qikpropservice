@@ -12,6 +12,9 @@ flask_assets
 python-dotenv
 flask_moment
 flask_pageDown
+flask_sslify
+flask-restful
+pydantic
 
 #
 email_validator
