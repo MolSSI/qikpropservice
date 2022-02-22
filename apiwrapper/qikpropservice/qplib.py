@@ -7,7 +7,7 @@ Provides all the functions which can be called from the CLI or as a library
 from contextlib import contextmanager
 from pathlib import Path
 from time import sleep
-from typing import List, Union
+from typing import List, Optional, Union
 
 from tqdm import tqdm
 import requests
@@ -40,6 +40,11 @@ def _handle_progress_bar(size, enable=False):
 
 
 class QikpropAsAService:
+    """
+    QikProp As A Service API Endpoint wrapper.
+
+    A class which wraps, calls, and handles the outputs from the
+    """
 
     def __init__(self,
                  server="http://qikprop.molssi.org/api/v1",
@@ -121,8 +126,8 @@ class QikpropAsAService:
                    task_id: str = None,
                    filepath: Union[Path, str] = None,
                    output_file: Union[Path, str] = Path("result.tar.gz"),
-                   use_progress_bar=False,
-                   blocksize=None
+                   use_progress_bar: bool = False,
+                   blocksize: Optional[int] = None
                    ):
         """
         Get a processed file (if ready) from the server
@@ -138,6 +143,13 @@ class QikpropAsAService:
         output_file : Path or str, Default: "result.tar.gz"
             Name of the tarfile to save when getting data from the server
             If there is a processing error reported by the server, a .err will be added to the suffix
+        use_progress_bar : bool, Default: False
+            Display a download progress bar. In most cases the QikProp output is very small O(10 kB) so the progress
+            bar will resolve faster than it can provide useful data.
+        blocksize : int, Optional
+            Size of the download blocks to fetch from the request. Useful for breaking up large expected returns so
+            data can be streamed to file rather than held in memory. If not set, uses the value set at class
+            instantiation.
 
         Returns
         -------

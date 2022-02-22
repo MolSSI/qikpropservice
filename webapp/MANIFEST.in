@@ -5,15 +5,24 @@ include README.md
 include LICENSE
 include MANIFEST.in
 
+# Specifics for the webapp to run
 include .dockerignore
 include .flaskenv
+include config.py
 include docker-compose.yml
 include Dockerfile
+include logging_config.yml
 include mongo-init.js
+include Procfile
+include qikprop_service.py
 include requirements.txt
 
+# Versioneer includes
 include versioneer.py
 include app/_version.py
 
-# Remove any quikprop data
-recursive-exclude app/qp QikProp staging
+# Remove any quikprop data except the python files we need
+recursive-exclude app/qp *
+# Re add the python files
+include app/qp/*.py
+

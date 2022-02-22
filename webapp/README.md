@@ -1,9 +1,9 @@
 [![codecov](https://codecov.io/gh/MolSSI/qikpropservice/branch/master/graph/badge.svg)](https://codecov.io/gh/MolSSI/qikpropservice)
 
-MolSSI QikProp As A Service
+MolSSI QikProp As A Service Web App
 ===========================
 
-A repository for serving QikProp v3 as a webservice and API access point.
+The web server for providing QikProp v3 as a webservice and API access point.
  
 This version of QikProp has been provided by [William L. Jorgensen](http://zarbi.chem.yale.edu) and hosted as
 a service by the [Molecular Sciences Software Institute (MolSSI)](https://molssi.org/). To report a
@@ -11,9 +11,12 @@ problem or suggest improvements, please open an issue on
 [the Project GitHub](https://github.com/MolSSI/qikpropservice). Additional features and options will be
 added over time.
 
-There are two main components for this project:
-* A web application where data can be uploaded in the form, and provides the endpoint for the API
-* A standalone API wrapper for CLI calls to the service hosted through the web app
+This package is the web application where data can be uploaded in the form, and provides the endpoint for the API. The 
+web app will not be bundled as a distributed package on services such as PyPI or Conda because 
+it requires access to the specific QikProp binaries it expects. 
+
+For direct information regarding the CLI and library tool, please see 
+[the Project GitHub](https://github.com/MolSSI/qikpropservice).
 
 How to run and use the Web App for development
 ==============================================
