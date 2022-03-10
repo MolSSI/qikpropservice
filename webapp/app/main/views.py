@@ -13,6 +13,9 @@ from pathlib import Path
 import traceback
 
 from ..qp import OptionMap
+from .. import __version_spec__
+
+_version = ".".join((str(i) for i in __version_spec__))
 
 
 logger = logging.getLogger(__name__)
@@ -82,13 +85,17 @@ def index():
             staged_file = inbound_staging_web(file, filename, checksum)
             print(f"File at invocation is {staged_file}")
             run_qikprop_worker.delay(str(staged_file), options, checksum)
-            return render_template('qikpropservice/upload_data_form.html', form=form, hash=checksum)
+            return render_template('qikpropservice/upload_data_form.html', form=form,
+                                   hash=checksum,
+                                   version=_version)
         except Exception as e:
             save_access(page="homepage", access_type="run", error=str(e))
             flash(traceback.format_exc())
 
     # return the empty form
-    return render_template('qikpropservice/upload_data_form.html', form=form)
+    return render_template('qikpropservice/upload_data_form.html',
+                           form=form,
+                           version=_version)
 
 
 # Experimental, not working API sections

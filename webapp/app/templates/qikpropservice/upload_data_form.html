@@ -23,7 +23,7 @@
             <img height="110px" src="{{ url_for('static', filename='img/molssi.jpg') }}"
                  alt="The Molecular Sciences Software Institute"
                  class="my-auto">
-            <h3 class="text-center my-auto">QikProp Processor v0.2</h3>
+            <h3 class="text-center my-auto">QikProp Processor v{{ version }}</h3>
         </div>
 
 {#      <p>Add comments here </p>  #}
@@ -92,7 +92,7 @@
     MolSSI thanks <a href="http://zarbi.chem.yale.edu/">William L. Jorgensen</a> and
     <a href="https://www.schrodinger.com/">Schrödinger</a> for the licensing of this software as a service.
 
-    <div id="dialog-message" title="QikProp Sergice">
+    <div id="dialog-message" title="QikProp Service">
         <p id="msg"></p>
     </div>
 
@@ -106,6 +106,25 @@
             </div>
         </div>
     {% endif %}
+
+    <div class="jumbotron">
+        <h2>QikProp as a Service CLI tool</h2>
+        <p>This QikProp as a Service is now available as a PyPI or Conda-Forge installable CLI tool which supports
+            multi-file input and wraps the service's API endpoints.
+        </p>
+        <ul class="list-group" style="text-align:justify">
+        <li class="list-group-item">
+            Via Conda-Forge:
+            <code>conda install -c conda-forge qikpropservice</code>
+            <a class="btn btn-primary btn-sm" href="https://github.com/conda-forge/qikpropservice-feedstock" role="button">Package GitHub Feedstock Link</a>
+        </li>
+        <li class="list-group-item">
+            Via PyPI/pip:
+            <code>pip install qikpropservice</code>
+            <a class="btn btn-primary btn-sm" href="https://pypi.org/project/qikpropservice/#modal-close" role="button">PyPI Package Link</a>
+        </li>
+        </ul>
+    </div>
 
 {% endblock %}
 

@@ -1,0 +1,18 @@
+version: "3.7"
+
+# Note: YAML boolean values (true, false, yes, no, on, off) must be
+#  enclosed in quotes, so that the parser interprets them as strings.
+
+# Custom network configs to avoid overwriting subdomains already in use
+
+networks:
+  frontend:
+      driver: bridge
+      ipam:
+          config:
+              - subnet: 172.30.0.0/16
+  backend:
+      driver: bridge
+      ipam:
+          config:
+              - subnet: 172.31.0.0/16

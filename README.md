@@ -23,5 +23,12 @@ The web application and service can be found at https://qikprop.molssi.org.
 
 CLI and Python Library
 ----------------------
-The CLI tool and Python Library are downloadable through PyPI and Conda-Forge (soon, links and install instruction 
-available when published)
+The CLI tool and Python Library are downloadable through PyPI or Conda-Forge 
+
+```bash
+conda install -c conda-forge qikpropservice
+```
+OR
+```bash
+pip install qikpropservice
+```
